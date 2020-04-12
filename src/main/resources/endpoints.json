@@ -1,0 +1,10 @@
+{
+  "sign-in": [
+    "/m/api/user/sign-in",
+    "/api/user/sign-in",
+    "/d/api/user/sign-in",
+    "/d/m/api/user/sign-in",
+    "m/api/user/sign-in",
+    "/user/sign-in"
+  ]
+}
