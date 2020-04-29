@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AlgoHeapSort {
+public class HeapSortAlgo {
     public static void main(String... args) {
         List<Integer> input = new ArrayList<>();
         input.add(8);
-        input.add(3);
+        input.add(7);
         input.add(9);
         input.add(10);
         input.add(3);
@@ -38,7 +38,7 @@ class HeapSortExample {
             input.remove(input.size() - 1);
             return;
         }
-        heapify(input);
+        heapify(input, input.size() - 1);
         sortedInput[index] = input.get(0);
         int lastElement = input.remove(input.size() - 1);
         if (input.size() > 0) {
@@ -49,39 +49,44 @@ class HeapSortExample {
         }
     }
 
-    private void heapify(List<Integer> input) {
-        for (int i = input.size() - 1; i >= 0; i--) {
-            int parent_i;
-            int sibling_i;
-            if (i % 2 == 0) {
-                parent_i = (i - 2) / 2;
-                sibling_i = i - 1;
+    // logn
+    private void heapify(List<Integer> input, int i) {
+        System.out.println("heapify " + i);
+        if (i <= 0) {
+            return;
+        }
+        int parent_i;
+        int sibling_i;
+        int next_i;
+        if (i % 2 == 0) {
+            parent_i = (i - 2) / 2;
+            sibling_i = i - 1;
+            next_i = i - 2;
+        } else {
+            parent_i = (i - 1) / 2;
+            sibling_i = i + 1;
+            next_i = i - 1;
+        }
+        int parent = input.get(parent_i);
+        int child = input.get(i);
+        int sibling = Integer.MAX_VALUE;
+        if (sibling_i >= 0 && sibling_i < input.size()) {
+            sibling = input.get(sibling_i);
+        }
+        if (parent > child) {
+            if (sibling > child) {
+                input.set(parent_i, child);
+                input.set(i, parent);
             } else {
-                parent_i = (i - 1) / 2;
-                sibling_i = i + 1;
-            }
-
-            int parent = Integer.MIN_VALUE;
-            if (parent_i >= 0 && parent_i < input.size()) {
-                parent = input.get(parent_i);
-            }
-            int child = input.get(i);
-            int sibling = Integer.MAX_VALUE;
-            if (sibling_i >= 0 && sibling_i < input.size()) {
-                sibling = input.get(sibling_i);
-            }
-            if (parent > child) {
-                if (sibling > child) {
-                    input.set(parent_i, child);
-                    input.set(i, parent);
-                } else {
-                    input.set(parent_i, sibling);
-                    input.set(sibling_i, parent);
-                }
-            } else if (parent > sibling) {
                 input.set(parent_i, sibling);
                 input.set(sibling_i, parent);
             }
+        } else if (parent > sibling) {
+            input.set(parent_i, sibling);
+            input.set(sibling_i, parent);
+        }
+        if (next_i > 0) {
+            heapify(input, next_i);
         }
     }
 }
